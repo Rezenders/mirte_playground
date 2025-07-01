@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self-Adaptation with Mirte &mdash; mirte_playground 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8dde47fa"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Mirte with PDDL" href="mirte_pddl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mirte_playground
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mirte_setup.html">Setting up Mirte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Use Mirte with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mirte_pddl.html">Mirte with PDDL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Self-Adaptation with Mirte</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monitoring">Monitoring</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#system-reflection">System Reflection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planning">Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mirte_playground</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Self-Adaptation with Mirte</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mirte_rebet.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="self-adaptation-with-mirte">
+<h1>Self-Adaptation with Mirte<a class="headerlink" href="#self-adaptation-with-mirte" title="Link to this heading"></a></h1>
+<p>Welcome to the self-adaptation exercises.<br />
+Now that you know a little bit about self-adaptation, it is time to put it into practice with your Mirte Master robot. These exercises revolve around the four phases of the MAPE-K loop (Monitoring, Analysis, Planning, and Execution). This will be implemented in the ReBeT (<strong>Re</strong>-configuration with <strong>Be</strong>havior <strong>T</strong>rees) framework.</p>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>We are using the same image as for with PDDL. However, the run command has been modified slightly. Please use the following commands to run the a container:</p>
+<ol class="arabic simple">
+<li><p>First allow xhost</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xhost<span class="w"> </span>+
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>And then the container</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>mirte<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">QT_X11_NO_MITSHM</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>-v<span class="w"> </span>/dev/dri:/dev/dri<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-v<span class="w"> </span>/etc/localtime:/etc/localtime:ro<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span>--cap-add<span class="w"> </span>SYS_ADMIN<span class="w"> </span>--device<span class="w"> </span>/dev/fuse<span class="w"> </span>--security-opt<span class="w"> </span>apparmor:unconfined<span class="w"> </span>ghcr.io/kas-lab/mirte_playground:main
+</pre></div>
+</div>
+<p>I recommend using Visual studio code to connect to the running container.
+You need to install the dev containers extension and then use the command palette (in View menu) for the action ‘Attach to running container’</p>
+<p>You can then open the mirte_ws folder inside the container.</p>
+</section>
+<section id="monitoring">
+<h2>Monitoring<a class="headerlink" href="#monitoring" title="Link to this heading"></a></h2>
+<p>Robots like the Mirte Master produce lots of information. Mirte specifically publishes many ROS2 topics for you to consider in a self-adaptive system’s monitoring. We specifically want to monitor information that tells us something about the current state of Mirte with regard to the quality attributes, like performance or safety, which matter to us.</p>
+<section id="system-reflection">
+<h3>System Reflection<a class="headerlink" href="#system-reflection" title="Link to this heading"></a></h3>
+<p>The system reflection node places data into the blackboard used by the nodes in the behavior tree. You can find its implementation in the <code class="docutils literal notranslate"><span class="pre">src/rebet_mirte/rebet_school/scripts/system_reflection.py</span></code> file.</p>
+<ol class="arabic simple">
+<li><p>Add subscribers for the following topics:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/io/distance/rear_left</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/io/distance/rear_right</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/io/power/power_watcher</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/diagnostics</span></code></p></li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use the ROS2 command line interface to figure out the types of each of these topics to create the correct subscribers.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">/diagnostics</span></code> topic is used for publishing lots of different data. In the callback for this subscriber, you need to grab the key-value pair corresponding to the <code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Average</span> <span class="pre">(1</span> <span class="pre">min)</span></code>. You are, of course, welcome to look at the other key-value pairs and choose to add more of these into the blackboard if you think they may be useful for analysis.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Ensure the messages received by the subscribers are placed in the blackboard using the appropriate client. Keep in mind you will need the names you choose for the blackboard entries later on.</p></li>
+</ol>
+<p>For both of these steps, the subscriber to the LaserScan topic serves as an example of what is expected.</p>
+<p><strong>Checking your work</strong>: To see if you have done everything correctly, run the following command on a computer connected to Mirte, but inside:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>rebet_school<span class="w"> </span>bringup_rebet_mirte.launch.py<span class="w"> </span>exercise:<span class="o">=</span>monitoring
+</pre></div>
+</div>
+<p>If you only want to check that your new subscribers are working, before bothering with the blackboard you can of course run the system reflection node in isolation like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>rebet_school<span class="w"> </span>system_reflection.py
+</pre></div>
+</div>
+<p>You should see the <code class="docutils literal notranslate"><span class="pre">mirte_arborist</span></code> terminal outputting the contents of the blackboard.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output may be a bit messy. You can uncomment line 28 in rebet_school/launch/arborist_config_launch.py to make a separate terminal for the blackboard contents.</p>
+</div>
+</section>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading"></a></h2>
+<p>Analysis uses the information obtained during monitoring to determine if an adaptation is necessary. The necessity for adaptation is typically described through adaptation goals. In ReBeT, adaptation goals are expressed through quality requirements. For example, a safety quality requirement might be not to collide with any objects.</p>
+<p>ReBeT allows you to express quality requirements through a special kind of decorator node called a <strong>QRDecorator</strong>. These requirements express a constraint placed on the behavior tree nodes below them in the tree.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">rebet_school/include/quality_requirements.hpp</span></code> file, you will find three QRDecorators declared. However, only the first one, <code class="docutils literal notranslate"><span class="pre">NoObjectsNearbyQR</span></code>, is fully implemented. This QR corresponds to the quality requirement: <em>There shall be no objects within X percent of the lidar range of the robot</em>, with X being a threshold that can be specified through an input port to the quality requirement.</p>
+<ol class="arabic simple">
+<li><p>Implement the <code class="docutils literal notranslate"><span class="pre">calculate_measure</span></code> method of <code class="docutils literal notranslate"><span class="pre">InTheWayQR</span></code>. The corresponding natural language quality requirement is: <em>The robot shall not pose an obstacle to humans standing behind it</em>. All the required input ports have already been declared for you. You can follow the example in <code class="docutils literal notranslate"><span class="pre">NoObjectsNearbyQR</span></code>.</p></li>
+<li><p>Implement the <code class="docutils literal notranslate"><span class="pre">calculate_measure</span></code> method of <code class="docutils literal notranslate"><span class="pre">CPULimitQR</span></code>. The corresponding natural language quality requirement is: <em>The robot’s average CPU load over the last minute should never exceed X%</em>, where X is specified through an input port.</p></li>
+<li><p>(Optional) Incorporate the <code class="docutils literal notranslate"><span class="pre">BatteryState</span></code> message’s information into an extension of the <code class="docutils literal notranslate"><span class="pre">CPULimitQR</span></code>. For example, you can add an <em>or</em> condition related to the number of watts consumed by the robot.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not all the data required for calculating a measure may be available at the exact same time, or in the most up-to-date state. Please account for this in your implementation to prevent crashes. Additionally, not all data types always contain data. For example, the Mirte’s sonar/lidar sensors simply return ‘null’ as a range when there is nothing within their range.</p>
+</div>
+<p>Before you can check your work, you need to fill in some missing details in the behavior tree specification using your QRs. You can use the following command to open Groot2, an IDE for behavior trees:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/mirte_ws/groot.AppImage
+</pre></div>
+</div>
+<p>Within Groot, use the ‘Load Project/File’ button to open the file <code class="docutils literal notranslate"><span class="pre">src/rebet_school/trees/qrs_sleep</span></code>.
+You should now see a behavior tree containing the three quality decorators you just worked on.</p>
+<p><img alt="Load Project/File" src="_images/groot_load.png" /></p>
+<ol class="arabic simple" start="4">
+<li><p>Wherever you see <code class="docutils literal notranslate"><span class="pre">&lt;REPLACE&gt;</span></code>, replace the string with the name for the corresponding blackboard entry you chose when completing step 2 of the Monitoring exercise. You should just set all the weights to 1, they are not used. You can save your work by right-clicking the entries in the Project tree on the left.</p></li>
+</ol>
+<p><img alt="Save" src="_images/groot_save.png" /></p>
+<p><strong>Checking your work</strong>: To see if you have done everything correctly, run the following command on a computer connected to Mirte, in the container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>rebet_school<span class="w"> </span>bringup_rebet_mirte.launch.py<span class="w"> </span>exercise:<span class="o">=</span>analysis
+</pre></div>
+</div>
+<p>You should see entries in the blackboard corresponding to what is output by your QRDecorators. Depending on your chosen thresholds, you can watch as the status of your QRs change by, for example, putting your hand in front of Mirte’s rear sonar sensors.</p>
+</section>
+<section id="planning">
+<h2>Planning<a class="headerlink" href="#planning" title="Link to this heading"></a></h2>
+<p>Now that we know the quality requirements the system should fulfill, we should plan some adaptations to keep them satisfied at runtime.<br />
+Within ReBeT, this is accomplished with a special kind of decorator node called an <strong>AdaptDecorator</strong>. These decorators contain a ROS2 node which is configured to adapt the software architecture of a ROS2 system. To do so, it makes use of a corresponding adaptation layer which processes requests from the AdaptDecorators and makes corresponding adaptations to ROS2 nodes, such as changing their parameters.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">rebet_school/include/adapt_navtopose.hpp</span></code> file, you will find three AdaptDecorators declared. These three AdaptDecorators are specifically meant for changing nodes related to the Nav2 NavigateToPose action. We have pre-defined three methods: <code class="docutils literal notranslate"><span class="pre">decrease_max_velocity()</span></code>, <code class="docutils literal notranslate"><span class="pre">increase_max_velocity()</span></code>, and <code class="docutils literal notranslate"><span class="pre">change_path_planner(PathPlanner)</span></code>. <code class="docutils literal notranslate"><span class="pre">SimpleAdaptMaxVelocity</span></code> has been implemented already to demonstrate how AdaptDecorators work.</p>
+<ol class="arabic simple">
+<li><p>Complete the implementation of <code class="docutils literal notranslate"><span class="pre">ComplexAdaptMaxVelocity</span></code>. This can be done by finishing the <code class="docutils literal notranslate"><span class="pre">evaluate_condition()</span></code> method. This method triggers any adaptations, through the three methods mentioned prior, when it returns true. Each of the three methods returns a boolean; they should return true as long as the adaptation is feasible. Changing to a maximum velocity lower than 0.0 would, for example, return false. For <code class="docutils literal notranslate"><span class="pre">ComplexAdaptMaxVelocity</span></code>, make an adaptation plan which considers the data from each of the three InputPorts, the status and metric of the Nearby QR, and the status of the InTheWay QR from the previous exercises.</p></li>
+<li><p>Complete the implementation of <code class="docutils literal notranslate"><span class="pre">AdaptPlanner</span></code>. You can assume we know from experimentation that SMAC uses more CPU than NavFn.</p></li>
+<li><p>(Optional) Also adjust the maximum velocity based on the CPU Usage status. You can add a metric defined in the CPU QR to the InputPorts and in the corresponding QR’s implementation to make more fine-grained adaptation logic.</p></li>
+</ol>
+</section>
+<section id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Link to this heading"></a></h2>
+<p>The actual execution of adaptations as described in MAPE-K is already taken care of by the adaptation layer. Instead, in this exercise, you should design a behavior tree using all the new nodes you have just defined, as well as the <code class="docutils literal notranslate"><span class="pre">NavigateToPose</span></code> BTActionNode which has already been defined for you.</p>
+<p>Once again, you can open Groot as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/mirte_ws/groot.AppImage
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pro tip! You can open multiple terminals into the docker container using the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-it</span> <span class="pre">mirte_playground</span> <span class="pre">bash</span></code> command in your system’s terminal.</p>
+</div>
+<p>This, open the <code class="docutils literal notranslate"><span class="pre">adap_qrs.xml</span></code> file adjacent to the other trees from before. In the menu on the bottom left, you can select various BT nodes, including those you have just been defining.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you added new ports to or changed existing ports of your decorators at any point, please ask Elvin to help you adjust the files to work with Groot properly.</p>
+</div>
+<ol class="arabic simple">
+<li><p>Define a new tree (right-click in the project view on the left) which makes use of multiple <code class="docutils literal notranslate"><span class="pre">NavigateToPose</span></code> actions and the decorator nodes in tandem. The <code class="docutils literal notranslate"><span class="pre">action_name</span></code> port for <code class="docutils literal notranslate"><span class="pre">NavigateToPose</span></code> is <code class="docutils literal notranslate"><span class="pre">navigate_to_pose</span></code>. The format for poses is interpreted as the xyz of the position followed by the xyzw of the rotation. You should separate the parts by semicolons like this: <code class="docutils literal notranslate"><span class="pre">-8.0;1.7;0;0;0;0;0;</span></code>.</p></li>
+</ol>
+<p>We recommend adding a Sleep action node of a few seconds as the first in your tree, to give you time to make sure everything is ready before the tree starts executing.
+Run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>rebet_school<span class="w"> </span>bringup_rebet_mirte.launch.py<span class="w"> </span>exercise:<span class="o">=</span>execution
+</pre></div>
+</div>
+<p>You will notice that Groot also opens. Instead of using it for editing, we will be using it to monitor the tree. Press the robot icon at the top left, input the port number 1667, and then press Connect. You should see the tree you made (keep in mind it needs to have been started) in action.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mirte_pddl.html" class="btn btn-neutral float-left" title="Mirte with PDDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Gustavo Rezende.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

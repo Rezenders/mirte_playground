@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up Mirte &mdash; mirte_playground 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8dde47fa"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Use Mirte with Docker" href="docker.html" />
+    <link rel="prev" title="mirte_playground documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mirte_playground
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up Mirte</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-to-the-robot-with-ethernet">Connecting to the robot with ethernet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-in">Logging in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trying-things-with-mirte">Trying things with Mirte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#day-one-patch">Day one patch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#making-sure-you-have-internet">Making sure you have internet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-patch">The patch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Use Mirte with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mirte_pddl.html">Mirte with PDDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mirte_rebet.html">Self-Adaptation with Mirte</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mirte_playground</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Setting up Mirte</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mirte_setup.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setting-up-mirte">
+<h1>Setting up Mirte<a class="headerlink" href="#setting-up-mirte" title="Link to this heading"></a></h1>
+<section id="connecting-to-the-robot-with-ethernet">
+<h2>Connecting to the robot with ethernet<a class="headerlink" href="#connecting-to-the-robot-with-ethernet" title="Link to this heading"></a></h2>
+<p>If you connect it to your laptop, you’ll need to change one setting to have your laptop give your robot an IP address. Go to settings, Network, Wired settings, IPv4, click on “Shared to other computers”. See the attachment for the button. You might need to unplug and plug it back in after changing the settings.</p>
+<p><img alt="Ethernet Settings Screenshot" src="_images/ethernet_settings.png" /></p>
+<p>The robot will probably get an IP in the 10.42.0.xx range. This should be visible on the screen or you can use AngryIpScanner to find it. The laptop with the ethernet cable can use that IP for SSH and ROS.</p>
+<p>Don’t forget to change the setting back to Automatic when you want to connect to a normal network.</p>
+</section>
+<section id="logging-in">
+<h2>Logging in<a class="headerlink" href="#logging-in" title="Link to this heading"></a></h2>
+<p>When trying to ssh into the robot, use ssh mirte&#64;your_mirtes_ip_address. This requires the ‘standard’ password mirte_mirte the first time you do this, or your own password the next time. Run ssh-copy-id mirte&#64;ip to never again having to enter the password again.</p>
+<p>You can use the VSCode remote ssh plugin to edit the files and open multiple terminals.</p>
+</section>
+<section id="trying-things-with-mirte">
+<h2>Trying things with Mirte<a class="headerlink" href="#trying-things-with-mirte" title="Link to this heading"></a></h2>
+<p>You can use a terminal ssh-ed into Mirte to inspect and interact with the ROS2 nodes running. Please try the following exercises:</p>
+<ol class="arabic simple">
+<li><p>List all of the topics on Mirte</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>list
+</pre></div>
+</div>
+<p>This show all the ROS2 topics some node is either subscribing or publishing to.</p>
+<ol class="arabic simple" start="2">
+<li><p>Inspect a specific topic</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>/scan
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>You can even check how frequently a topic is being published</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/scan
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Or how much bandwidth it is using. Try this with one of the camera messages</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>bw<span class="w"> </span>&lt;topic_name&gt;
+</pre></div>
+</div>
+</section>
+<section id="day-one-patch">
+<h2>Day one patch<a class="headerlink" href="#day-one-patch" title="Link to this heading"></a></h2>
+<section id="making-sure-you-have-internet">
+<h3>Making sure you have internet<a class="headerlink" href="#making-sure-you-have-internet" title="Link to this heading"></a></h3>
+<p>There are extra configurations for the 2025 summer school, however for the setup an internet connection on the robot is required.</p>
+<p>After the setup described earlier the robot might have internet, which can be checked by running <code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">google.com</span></code>.</p>
+<p>If you <strong>do not</strong> receive a response, a temporary internet bridge between your WiFi and ethernet cable to the robot can be configured.
+The steps to set this up are as follows:
+Run these commands <strong>on your laptop</strong>, <strong>not</strong> on Mirte.</p>
+<ol class="arabic simple">
+<li><p>Run this command</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ip<span class="w"> </span>a
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>There should be a ethernet adapter (starting with <code class="docutils literal notranslate"><span class="pre">en</span></code>), save the name (the part before the colon) to a variable running by running</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ethernet</span><span class="o">=</span>&lt;ETHERNET_ADAPTER_TO_MIRTE&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>There should also be a wifi (wlan) adapter (starting with <code class="docutils literal notranslate"><span class="pre">wl</span></code>), save this name to the variable running</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">wifi</span><span class="o">=</span>&lt;OTHER_INTERNET_CONNECTION&gt;
+</pre></div>
+</div>
+<p>Please of course replace the parts between &lt; &gt; with your computer specific details.
+3. Then run the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span><span class="nv">$ethernet</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$wifi</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span><span class="nv">$wifi</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$ethernet</span><span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>ESTABLISHED,RELATED<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+sudo<span class="w"> </span>iptables<span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-o<span class="w"> </span><span class="nv">$wifi</span><span class="w"> </span>-j<span class="w"> </span>MASQUERADE
+</pre></div>
+</div>
+</section>
+<section id="the-patch">
+<h3>The patch<a class="headerlink" href="#the-patch" title="Link to this heading"></a></h3>
+<p>Afterwards you can ssh into the MIRTE and execute the <code class="docutils literal notranslate"><span class="pre">install_mirte.sh</span></code> script on it by excuting the following command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://raw.githubusercontent.com/SuperJappie08/mirte-demo-ensurance/refs/heads/development-detection/install_mirte.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="mirte_playground documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="docker.html" class="btn btn-neutral float-right" title="Use Mirte with Docker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Gustavo Rezende.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

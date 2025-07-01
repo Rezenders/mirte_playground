@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mirte with PDDL &mdash; mirte_playground 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8dde47fa"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Self-Adaptation with Mirte" href="mirte_rebet.html" />
+    <link rel="prev" title="Use Mirte with Docker" href="docker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mirte_playground
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mirte_setup.html">Setting up Mirte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Use Mirte with Docker</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mirte with PDDL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mapping">Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-the-mapping-stack">Start the mapping stack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make-mirte-navigate">Make Mirte navigate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#save-map">Save map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plansys2">PlanSys2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pddl">PDDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#waypoints-configuration">Waypoints configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-more-waypoints">Adding more waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-plansys-with-mirte">Run PlanSys with Mirte</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mirte_rebet.html">Self-Adaptation with Mirte</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mirte_playground</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Mirte with PDDL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mirte_pddl.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mirte-with-pddl">
+<h1>Mirte with PDDL<a class="headerlink" href="#mirte-with-pddl" title="Link to this heading"></a></h1>
+<p>During this exercise, you will learn how to use <a class="reference external" href="https://planning.wiki/guide/whatis/pddl">PDDL</a> with <a class="reference external" href="https://plansys2.github.io/">PlanSys2</a> to make Mirte navigate using <a class="reference external" href="https://docs.nav2.org/">nav2</a>.</p>
+<p>Before we start digging in the PDDL formulation and PlanSys2, first we need to create a map of the arena to enable the robot to navigate autonomously.</p>
+<p><a class="reference external" href="https://www.youtube.com/shorts/LW3ei5E4KZw">Video of Mirte moving around with PlanSys2</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the commands below should be executed inside a docker container of the <code class="docutils literal notranslate"><span class="pre">mirte_playground</span></code> image. Check the <a class="reference external" href="https://kas-lab.github.io/mirte_playground/docker.html">Use Mirte with Docker</a> page for detailed instructions on how to download and run the image.</p>
+</div>
+<section id="mapping">
+<h2>Mapping<a class="headerlink" href="#mapping" title="Link to this heading"></a></h2>
+<p>Place Mirte inside the arena, preferably close to the middle to make it easier for Mirte to move.</p>
+<section id="start-the-mapping-stack">
+<h3>Start the mapping stack<a class="headerlink" href="#start-the-mapping-stack" title="Link to this heading"></a></h3>
+<p>Start the navigation stack:</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>mirte_navigation<span class="w"> </span>real_robot_navigation.launch.py
+</pre></div>
+</div>
+<p>In another terminal, start the slam toolbox:</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>slam_toolbox<span class="w"> </span>online_async_launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span><span class="nb">false</span>
+</pre></div>
+</div>
+</section>
+<section id="make-mirte-navigate">
+<h3>Make Mirte navigate<a class="headerlink" href="#make-mirte-navigate" title="Link to this heading"></a></h3>
+<p>To make Mirte navigate, click on the <code class="docutils literal notranslate"><span class="pre">Nav2</span> <span class="pre">Goal</span></code> button on the top part of the RVIZ screen then click on a point in the map to make it move there.</p>
+<p><img alt="alt text" src="_images/nav2goal.png" /></p>
+<p>Make Mirte move around until it maps the whole arena. When you are satisfied with the map created, move to the next step.</p>
+</section>
+<section id="save-map">
+<h3>Save map<a class="headerlink" href="#save-map" title="Link to this heading"></a></h3>
+<p>To save the map you just created, first you need to add the SlamToolboxPlugin to RVIZ. For that, on the top left part of RVIZ, click on <code class="docutils literal notranslate"><span class="pre">Panels</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">new</span> <span class="pre">panel</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">SlamToolBoxPlugin</span></code>:</p>
+<p><img alt="alt text" src="_images/rviz_add_slam_toolbox_plugin.png" /></p>
+<p>After adding the panel, it should show up in the bottom left part of RVIZ</p>
+<p><img alt="alt text" src="_images/toolbox.png" /></p>
+<p>Insert the following path in the field in front of the <code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">Map</span></code> button and click on the button:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">user</span><span class="o">/</span><span class="n">mirte_ws</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mirte_navigation</span><span class="o">/</span><span class="n">maps</span><span class="o">/</span><span class="n">arena_map</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="plansys2">
+<h2>PlanSys2<a class="headerlink" href="#plansys2" title="Link to this heading"></a></h2>
+<p>For this exercise, we designed a very simple scenario where Mirte should move through 3 waypoints and return to the initial position.</p>
+<section id="pddl">
+<h3>PDDL<a class="headerlink" href="#pddl" title="Link to this heading"></a></h3>
+<p>The first thing you need to do is to modify the <a class="reference external" href="https://github.com/kas-lab/mirte_playground/blob/main/mirte_pddl/pddl/domain.pddl">domain.pddl</a> and <a class="reference external" href="https://github.com/kas-lab/mirte_playground/blob/main/mirte_pddl/pddl/problem.pddl">problem.pddl</a> files to model the scenario described above.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tip: make sure you model which points were already visited and modify the action preconditions to use this knowledge. Also, make sure the action effects properly model the location of the robot, and its impact on the visisted waypoints knowledge.</p>
+</div>
+</section>
+<section id="waypoints-configuration">
+<h3>Waypoints configuration<a class="headerlink" href="#waypoints-configuration" title="Link to this heading"></a></h3>
+<p>Update the <a class="reference external" href="https://github.com/kas-lab/mirte_playground/blob/main/mirte_pddl/config/waypoints.yml">waypoints.yml</a> configuration file with coordinates that make sense for your map.
+To obtain the coordinates of points in the map, you can click on the <code class="docutils literal notranslate"><span class="pre">Publish</span> <span class="pre">Point</span></code> button on the top part of RVIZ and subscribe to the <code class="docutils literal notranslate"><span class="pre">/clicked_point</span></code> topic to obtain the coordinates.</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/clicked_point
+</pre></div>
+</div>
+</section>
+<section id="adding-more-waypoints">
+<h3>Adding more waypoints<a class="headerlink" href="#adding-more-waypoints" title="Link to this heading"></a></h3>
+<p>If you want to add more waypoints, in addition to adding them to the <a class="reference external" href="https://github.com/kas-lab/mirte_playground/blob/main/mirte_pddl/config/waypoints.yml">waypoints.yml</a> file, you need to declare the new waypoints in the <a class="reference external" href="https://github.com/kas-lab/mirte_playground/blob/fcb49fa21600141758ce2ff98e6cbc59564cc44c/mirte_pddl/src/action_move.cpp#L49-L52">move action</a>.</p>
+</section>
+<section id="run-plansys-with-mirte">
+<h3>Run PlanSys with Mirte<a class="headerlink" href="#run-plansys-with-mirte" title="Link to this heading"></a></h3>
+<p><strong>First, connect to Mirte.</strong></p>
+<p>In your computer, inside the docker container, start the navigation stack:</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>mirte_navigation<span class="w"> </span>real_robot_navigation.launch.py
+</pre></div>
+</div>
+<p>In another terminal, start PlanSys2:</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>mirte_pddl<span class="w"> </span>mirte_pddl.launch.py
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes PlanSys2 crashes when starting, so give it another try in case it doesn’t work in the first try.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="docker.html" class="btn btn-neutral float-left" title="Use Mirte with Docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mirte_rebet.html" class="btn btn-neutral float-right" title="Self-Adaptation with Mirte" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Gustavo Rezende.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
